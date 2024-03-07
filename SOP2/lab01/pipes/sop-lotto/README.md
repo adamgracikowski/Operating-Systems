@@ -2,7 +2,7 @@
 
 Napisz program symulujący loterię Lotto, używając procesów komunikujących się za pomocą łącz pipe.
 
-Program przyjmuje dwa parametry: $N$ - liczbę graczy ($N ­>= 1$) oraz $T$ - liczbę tygodni symulacji ($T ­>= 1$).
+Program przyjmuje dwa parametry: $N$ - liczbę graczy ($N ­\geq 1$) oraz $T$ - liczbę tygodni symulacji ($T ­\geq 1$).
 
 ## Zasady gry:
 
