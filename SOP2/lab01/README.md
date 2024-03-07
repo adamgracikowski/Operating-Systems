@@ -94,24 +94,29 @@ int fileno(FILE *stream);
 int setvbuf(FILE* stream, char* buf, int type, size_t size);
 /* Opis:
     - assigns buffering to a stream.
-    - it may be used after the stream pointed to by stream is associated with an open file but before any other operation.
+    - it may be used after the stream pointed to by stream is
+      associated with an open file but before any other operation.
     - _IOFBF causes input/output to be fully buffered.
     - _IOLBF causes input/output to be line buffered.
     - _IONBF causes input/output to be unbuffered.
-    - if buf is not a null pointer, the array it points to may be used instead of a buffer allocated by setvbuf() and the argument size specifies the size of the array.
+    - if buf is not a null pointer, the array it points to may be used instead
+      of a buffer allocated by setvbuf() and the argument size specifies the size of the array.
     - on success returns 0, otherwise -1 (and errno is set to indicate the error).
 */
 
 ssize_t write(int fildes, const void *buf, size_t nbyte);
 /* Opis:
-    - attempts to write nbytes from the buffer pointed to by buf to the file associated with the open file descriptor fildes.
+    - attempts to write nbytes from the buffer pointed to by buf to the file
+      associated with the open file descriptor fildes.
     - if interrupted by a signal before it writes any data, it returns -1 and sets EINTR.
     - if interrupted by a signal after it writes some data, it returns the number of bytes written.
     - on failure returns -1 and sets errno to indicate the error.
     
 Write requests to a pipe or FIFO are handled in the same way as a regular file with the following exceptions:
 - There is no file offset associated with a pipe, hence each write request shall append to the end of the pipe.
-- Write requests of {PIPE_BUF} bytes or less shall not be interleaved with data from other processes doing writes on the same pipe. Writes of greater than {PIPE_BUF} bytes may have data interleaved, on arbitrary boundaries, with writes by other processes, whether or not the O_NONBLOCK flag of the file status flags is set.
+- Write requests of {PIPE_BUF} bytes or less shall not be interleaved with data from other processes doing
+writes on the same pipe. Writes of greater than {PIPE_BUF} bytes may have data interleaved, on arbitrary
+boundaries, with writes by other processes, whether or not the O_NONBLOCK flag of the file status flags is set.
 - If the O_NONBLOCK flag is clear, a write request may cause
 the thread to block, but on normal completion it shall return nbyte.
 */
@@ -120,13 +125,15 @@ ssize_t read(int fildes, void *buf, size_t nbyte);
 /* Opis:
     - attemts to read from a file given by fildes file descriptor.
     - if interrupted by a signal before it reads any data, it shall return -1 with errno set to [EINTR].
-    - if a read() interrupted by a signal after it has successfully read some data, it shall return the number of bytes read.
+    - if a read() interrupted by a signal after it has successfully read some data,
+      it shall return the number of bytes read.
     - if the write-end of pipe was closed, read() returns 0.
     
 When attempting to read from an empty pipe or FIFO:
 - If no process has the pipe open for writing, read() shall return 0 to indicate end-of-file.
 - If some process has the pipe open for writing and O_NONBLOCK is set, read() shall return -1 and set errno to [EAGAIN].
-- If some process has the pipe open for writing and O_NONBLOCK is clear, read() shall block the calling thread until some data is written or the pipe is closed by all processes that had the pipe open for writing.
+- If some process has the pipe open for writing and O_NONBLOCK is clear, read() shall block the calling thread until
+  some data is written or the pipe is closed by all processes that had the pipe open for writing.
 */
 
 /*
@@ -135,7 +142,8 @@ Important errors and signals:
 - EPIPE - an attempt is made to write to a pipe or FIFO that is not
 open for reading by any process, or that only has one end
 open. A SIGPIPE signal shall also be sent to the thread.
-- SIGPIPE - if read-end of the pipe is closed and you try to write to the pipe, system sends SIGPIPE signal to the process and write() returns EPIPE error (you can handle the signal by setting a signal handler for SIGPIPE).
+- SIGPIPE - if read-end of the pipe is closed and you try to write to the pipe, system sends SIGPIPE signal
+to the process and write() returns EPIPE error (you can handle the signal by setting a signal handler for SIGPIPE).
 */
 ```
 
