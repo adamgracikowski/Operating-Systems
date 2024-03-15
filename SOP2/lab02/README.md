@@ -1,6 +1,27 @@
 # Queues:
 ## Functions:
 ```c
+/*  Basic Theory:
+-   After a fork(), a child process inherits copies of its parent's message queue descriptors,
+    and these descriptors refer to the same open message queue descriptions as the corresponding
+    message queue descriptors in the parent.
+-   Each message is assigned a priority, and messages are always delivered to the receiving
+    process in order of highest priority first.
+-   Message passing (of length 0 to mq_msgsize) is always reliable.
+-   The queue persists system-wide, meaning it exists until system restart or explicit deletion.
+-   The queue has finite capacity (mq_maxmsg messages).
+-   Messages have a maximum length (mq_msgsize) specified at queue creation time.
+-   Read operations must always be prepared to receive a message of maximum length.
+-   When mq_maxmsg is exceeded, the process writing to the queue will be blocked
+    (in blocking mode by default) until there is sufficient free space in the queue
+    or until interrupted by a signal.
+-   Messages can be assigned a priority (unsigned integer, smaller than the constant MQ_PRIO_MAX>=32).
+-   Messages with the highest priority are placed at the front of the queue (in FIFO order).
+-   Reading from an empty queue blocks the receiver (thread) if access is in blocking mode.
+-   If multiple threads are blocked on mq_send()/mq_timedsend() due to a full queue,
+    when space becomes available, the thread with the highest priority, waiting the longest, is unblocked.
+*/
+
 #include <mqueue.h>
 mqd_t mq_open(const char *name, int oflag, ...);
 /* Opis:
