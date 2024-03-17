@@ -15,3 +15,7 @@ Program klienta jest wywoływany z jednym parametrem - nazwą kolejki serwera (j
 2. Serwer odczytuje pierwszą wiadomość z kolejki `PID_s`, po czym odsyła odpowiedź do klienta. Na tym etapie program ignoruje wszystkie błędy. Klient odczytuje 2 liczby ze standardowego wejścia i wysyła wiadomość do serwera. Czeka na odpowiedź i wypisuje ją.
 3. Serwer obsługuje wszystkie kolejki. Kończy działanie po otrzymaniu `SIGINT`. Klient wysyła swoje wiadomości do momentu odczytania EOF albo przekroczenia czasu oczekiwania na odpowiedź.
 4. Kolejki są usuwane przy zamykaniu programów. Pełna obsługa błędów.
+
+## Szczegóły implementacji:
+
+Czekanie na wiadomość z dowolnej kolejki przez serwer zostało zrealizowane poprzez utworzenie dedykowanych procesów dla każdej z obsługiwanych przez serwer kolejek.
