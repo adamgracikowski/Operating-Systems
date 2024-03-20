@@ -11,5 +11,5 @@ Gdy otrzymają zadanie (cztery liczby całkowitoliczbowe z zakresu $[-1000, 1000
 3. Kierowcy po wykonaniu kursu wysyłają informację o wykonanym zadaniu do głównego procesu za pomocą indywidualnych kolejek o nazwie `/uber_results[PID]`. Kierowcy wysyłają tą kolejką długość przebytego kursu w metryce miejskiej. Główny proces odbiera wyniki i wypisuje je na standardowym wyjściu: `The driver [PID] drove a distance of [distance]`.
 4. Główny proces po stworzeniu dzieci i kolejek ustawia alarm na $T$ sekund. Po otrzymaniu `SIGALRM` wysyła $N$ razy wiadomość o zwiększonym priorytecie, świadczącą o zakończeniu pracy, po czym przestaje wysyłać nowe zadania i zamyka kolejkę. Kierowcy wykrywają, że główny proces zamknął kolejkę poprzez odebranie wiadomości o zwiększonym priorytecie i również kończą swoją pracę. Wszystkie zasoby są poprawnie zwalniane, a kolejki zamykane i usuwane.
 
-## Autor i pomysłodawca zadania:
-Autorem i pomysłodwacą zadania jest 
+## Autor zadania:
+Autorem i pomysłodawcą zadania jest [Tomasz Herman](https://github.com/tomasz-herman).
