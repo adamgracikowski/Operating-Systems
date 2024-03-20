@@ -353,7 +353,7 @@ void driver_work(mq_attr_t *from_attr, mq_attr_t *to_attr)
     }
     if (mq_close(uber_queue) < 0)
         ERR("mq_close");
-    printf("Driver [%d]: Closing %s\n", getpid(), UBER_QUEUE_NAME);
+    printf("Driver [%d]: Closing %s\n", getpid(), driver_name);
 }
 
 void create_drivers(pid_t *driver_pid, int N, mq_attr_t from_attr, mq_attr_t to_attr)
