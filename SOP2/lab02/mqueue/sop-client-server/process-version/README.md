@@ -13,7 +13,7 @@ Program klienta jest wywoływany z jednym parametrem - nazwą kolejki serwera (j
 ## Etapy:
 1. Serwer tworzy swoje kolejki i wypisuje ich nazwy. Po upływie sekundy usuwa je i kończy działanie. Klient tworzy swoją kolejkę, czeka 1 sekundę, usuwa ją i kończy działanie.
 2. Serwer odczytuje pierwszą wiadomość z kolejki `PID_s`, po czym odsyła odpowiedź do klienta. Na tym etapie program ignoruje wszystkie błędy. Klient odczytuje 2 liczby ze standardowego wejścia i wysyła wiadomość do serwera. Czeka na odpowiedź i wypisuje ją.
-3. Serwer obsługuje wszystkie kolejki. Kończy działanie po otrzymaniu `SIGINT`. Klient wysyła swoje wiadomości do momentu odczytania EOF albo przekroczenia czasu oczekiwania na odpowiedź.
+3. Serwer obsługuje wszystkie kolejki. Kończy działanie po otrzymaniu `SIGINT`. Klient wysyła swoje wiadomości do momentu odczytania `EOF` albo przekroczenia czasu oczekiwania na odpowiedź.
 4. Kolejki są usuwane przy zamykaniu programów. Pełna obsługa błędów.
 
 ## Szczegóły implementacji:
