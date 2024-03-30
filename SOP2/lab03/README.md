@@ -5,34 +5,49 @@
 
 void* mmap(void *addr, size_t len, int prot, int flags, int fildes, off_t off);
 /* Opis:
-    - establish a mapping between the address space of the process at an address pa for len bytes to the memory object represented by the file descriptor fildes at offset off for len bytes.
-    - the parameter prot determines whether read, write, execute, or some combination of accesses are permitted to the data being mapped.
-    - the file descriptor fildes shall have been opened with read permission, regardless of the protection options specified. If PROT_WRITE is specified, the application shall ensure that it has opened the file descriptor fildes with write permission unless MAP_PRIVATE is specified.
+    - establish a mapping between the address space of the process at an address
+      pa for len bytes to the memory object represented by the file descriptor fildes
+      at offset off for len bytes.
+    - the parameter prot determines whether read, write, execute, or some combination
+      of accesses are permitted to the data being mapped.
+    - the file descriptor fildes shall have been opened with read permission, regardless
+      of the protection options specified. If PROT_WRITE is specified, the application
+      shall ensure that it has opened the file descriptor fildes with write permission
+      unless MAP_PRIVATE is specified.
     - the mapping type is retained across fork().
-    - all implementations interpret an addr value of 0 as granting the implementation complete freedom in selecting pa. A non-zero value of addr is taken to be a suggestion of a process address near which the mapping should be placed.
-    - on success returns the address at which the mapping was placed, otherwise it returns MAP_FAILED and sets errno to indicate the error.
+    - all implementations interpret an addr value of 0 as granting the implementation
+      complete freedom in selecting pa. A non-zero value of addr is taken to be a suggestion
+      of a process address near which the mapping should be placed.
+    - on success returns the address at which the mapping was placed, otherwise it returns
+      MAP_FAILED and sets errno to indicate the error.
 
 Possible values of prot parameter:
-- PROT_READ - Data can be read.
+- PROT_READ  - Data can be read.
 - PROT_WRITE - Data can be written.
-- PROT_EXEC - Data can be executed.
-- PROT_NONE - Data cannot be accessed.
+- PROT_EXEC  - Data can be executed.
+- PROT_NONE  - Data cannot be accessed.
 
 Possible values of flags parameter:
-- MAP_SHARED - Changes are shared (write references shall change the underlying object).
-- MAP_PRIVATE - Changes are private (modifications to the mapped data by the calling process shall be visible only to the calling process and shall not change the underlying object).
-- MAP_FIXED - Interpret addr exactly.
-- MAP_ANONYMOUS - The mapping is not backed by any file and its contents are initialized to zero. The fd argument is ignored (but should be -1 for portability). The off parameter should be set to 0.
+- MAP_SHARED    - Changes are shared (write references shall change the underlying object).
+- MAP_PRIVATE   - Changes are private (modifications to the mapped data by the calling process
+                  shall be visible only to the calling process and shall not change the underlying object).
+- MAP_FIXED     - Interpret addr exactly.
+- MAP_ANONYMOUS - The mapping is not backed by any file and its contents are initialized to zero.
+                  The fd argument is ignored (but should be -1 for portability).
+                  The off parameter should be set to 0.
 
 Common errors:
-- EACCES - The fildes argument is not open for read, regardless of the protection specified, or fildes is not open for write and PROT_WRITE was specified for a MAP_SHARED type mapping.
-- EBADF - The fildes argument is not a valid open file descriptor.
+- EACCES - The fildes argument is not open for read, regardless of the protection specified,
+           or fildes is not open for write and PROT_WRITE was specified for a MAP_SHARED type mapping.
+- EBADF  - The fildes argument is not a valid open file descriptor.
 */
 
 int munmap(void *addr, size_t len);
 /* Opis:
-    - remove any mappings for those entire pages containing any part of the address space of the process starting at addr and continuing for len bytes.
-    - further references to these pages shall result in the generation of a SIGSEGV signal to the process.
+    - remove any mappings for those entire pages containing any part of the address
+      space of the process starting at addr and continuing for len bytes.
+    - further references to these pages shall result in the generation
+      of a SIGSEGV signal to the process.
     - if there are no mappings in the specified address range, then munmap() has no effect.
     - on success returns 0, otherwise -1 and sets the errno to indicate the error.
 */
@@ -44,15 +59,16 @@ int msync(void *addr, size_t len, int flags);
     - on success returns 0, otherwise -1 and sets the errno to indicate the error.
         
 Possible flags values:
-- MS_ASYNC - Perform asynchronous writes.
-- MS_SYNC - Perform synchronous writes (shall not return until all write operations are completed).
+- MS_ASYNC      - Perform asynchronous writes.
+- MS_SYNC       - Perform synchronous writes (shall not return until all write operations are completed).
 - MS_INVALIDATE - Invalidate cached data.
 */
 
 #include <string.h>
 void *memcpy(void* destination, const void* source, size_t n);
 /* Opis:
-    - copies n bytes from the object pointed to by source into the object pointed to by destination.
+    - copies n bytes from the object pointed to by source
+      into the object pointed to by destination.
 */
 
 void *memset(void *s, int c, size_t n);
@@ -64,8 +80,10 @@ void *memset(void *s, int c, size_t n);
 int ftruncate(int fildes, off_t length);
 /* Opis:
     - truncates a file to a specified length.
-    - if the file size is increased, the extended area shall appear as if it were zero-filled.
-    - if fildes refers to a shared memory object, ftruncate() shall set the size of the shared memory object to length.
+    - if the file size is increased, the extended area shall appear
+      as if it were zero-filled.
+    - if fildes refers to a shared memory object, ftruncate() shall
+      set the size of the shared memory object to length.
     - on success returns 0, otherwise -1 and sets the errno to indicate the error.
 */
 
@@ -80,10 +98,14 @@ int shm_open(const char *name, int oflag, mode_t mode);
     - on failure returns -1 and sets the errno to indicate the error.
 
 Possible oflag values:
-- O_RDONLY - open the object for read access (a shared object opened this way can only be mmaped for read access, that is with PROT_READ set).
-- O_RDWR - open the object for read-write access.
-- O_CREAT - create the shared memory object if it does not exist. A new shared memory object initially has zero length — the size of the object can be set using ftruncate. The newly allocated bytes of a shared memory object are automatically initialized to 0.
-- O_TRUNC - if the shared memory object already exists, truncate it to zero bytes.
+- O_RDONLY - open the object for read access (a shared object opened this way can
+             only be mmaped for read access, that is with PROT_READ set).
+- O_RDWR   - open the object for read-write access.
+- O_CREAT  - create the shared memory object if it does not exist.
+             A new shared memory object initially has zero length — the size of the object
+             can be set using ftruncate. The newly allocated bytes of a shared memory object
+             are automatically initialized to 0.
+- O_TRUNC  - if the shared memory object already exists, truncate it to zero bytes.
 */
 
 int shm_unlink(const char *name);
