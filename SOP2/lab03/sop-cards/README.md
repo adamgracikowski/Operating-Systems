@@ -1,3 +1,3 @@
 # Gra karciana:
 
-Program stanowi kopię programu. Został zaimplementowany z wykorzystaniem pamięci współdzielonej i barier w celu synchronizacji procesów graczy.
+Program stanowi kopię [sop-cards](https://github.com/adamgracikowski/Operating-Systems/tree/main/SOP2/lab01/pipes/sop-cards) napisanego podczas przygotowania do pierwszych zajęć laboratoryjnych. W przeciwieństwie do poprzedniej wersji, zamiast łączy nienazwanych, wykorzystuje pamięć współdzieloną, a także bariery w celu synchronizacji procesów graczy.
