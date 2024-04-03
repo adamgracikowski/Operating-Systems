@@ -20,8 +20,11 @@
 
 /************** Random numbers **************/
 
+#define NEXT_DOUBLE(a, b) (((double)rand() / RAND_MAX) * ((b) - (a)) + (a))
 #define NEXT_INT(a, b) (rand() % ((b) - (a) + 1))
-#define NEXT_DOUBLE(a, b) ((rand() % RAND_MAX) * ((b) - (a) + 1) + (a))
+    
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
 
 int sop_randint(int a, int b)
 {
