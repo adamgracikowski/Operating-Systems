@@ -1,0 +1,1 @@
+# Sumowanie cyfr PID-u:
