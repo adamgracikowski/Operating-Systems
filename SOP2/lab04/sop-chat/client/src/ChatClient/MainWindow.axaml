@@ -1,0 +1,47 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:cc="clr-namespace:ChatClient"
+        mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="320"
+        Width="320" Height="480"
+        MinWidth="240" MinHeight="320"
+        x:Class="ChatClient.MainWindow"
+        x:DataType="cc:MainWindow"
+        Title="Chat Client" Closing="OnClosing">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Connect..." Name="ConnectMenuItem" Click="OnConnect" IsEnabled="True"/>
+                <MenuItem Header="_Disconnect" Click="OnDisconnect" IsEnabled="{Binding !#ConnectMenuItem.IsEnabled}"/>
+                <Separator/>
+                <MenuItem Header="_Exit" Click="OnExit"/>
+            </MenuItem>
+        </Menu>
+        <Grid ColumnDefinitions="*,Auto" RowDefinitions="*,Auto">
+            <ScrollViewer Grid.ColumnSpan="2" Name="ScrollViewer">
+                <ItemsControl ItemsSource="{Binding Messages}" Name="MessagesControl" >
+                    <ItemsControl.DataTemplates>
+                        <DataTemplate DataType="{x:Type cc:ChatMessage}">
+                            <Border Margin="5"
+                                    CornerRadius="10"
+                                    BorderBrush="OrangeRed" BorderThickness="1"
+                                    Padding="5">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding Sender}" FontWeight="Bold" TextAlignment="Left" />
+                                    <TextBlock TextWrapping="Wrap" Text="{Binding Text}" Padding="3" TextAlignment="Left"/>
+                                    <TextBlock Text="{Binding Time,StringFormat=HH:mm}" TextAlignment="Right" Foreground="LightGray" FontSize="10"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type cc:StatusMessage}">
+                            <TextBlock TextAlignment="Center" Text="{Binding Text}"/>
+                        </DataTemplate>
+                    </ItemsControl.DataTemplates>
+                </ItemsControl>
+            </ScrollViewer>
+            <TextBox Grid.Row="1" Grid.Column="0" Margin="3" KeyDown="OnKeyDown" Name="MessageTextBox"/>
+            <Button Grid.Column="1" Grid.Row="1" Margin="3" Click="OnSend">Send</Button>
+        </Grid>
+    </DockPanel>
+</Window>
